@@ -2,18 +2,37 @@ package br.com.dio.challenge.challenge;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
-    private  String name;
+    private String name;
     private Set<Content> subscribedContents = new LinkedHashSet<>();
     private Set<Content> completedContents = new LinkedHashSet<>();
 
-    public void subscribeBootcamp(Bootcamp bootcamp) {}
+    public void subscribeBootcamp(Bootcamp bootcamp) {
+        this.subscribedContents.addAll(bootcamp.getContents());
 
-    public void makeProgress() {}
+        bootcamp.getSubscribedDevs().add(this);
+    }
 
-    public void calculateTotalExp() {}
+    public void makeProgress() {
+        Optional<Content> content = this.subscribedContents.stream().findFirst();
+
+        if (content.isPresent()) {
+            this.completedContents.add(content.get());
+            this.subscribedContents.remove(content.get());
+        } else {
+            System.err.println("You are not enrolled in any content.");
+        }
+    }
+
+    public double calculateTotalExp() {
+        return this.completedContents
+                .stream()
+                .mapToDouble(Content::calculateExp)
+                .sum();
+    }
 
     public String getName() {
         return name;
