@@ -2,25 +2,12 @@ package br.com.dio.challenge.challenge;
 
 import java.time.LocalDate;
 
-public class Mentoring {
-    String title;
-    String description;
-    LocalDate date;
+public class Mentoring extends Content {
+    private LocalDate date;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public double calculateExp() {
+        return DEFAULT_EXP + 20d;
     }
 
     public LocalDate getDate() {
@@ -34,8 +21,8 @@ public class Mentoring {
     @Override
     public String toString() {
         return "Mentoria{" +
-                "titulo='" + title + '\'' +
-                ", descricao='" + description + '\'' +
+                "titulo='" + getTitle() + '\'' +
+                ", descricao='" + getDescription() + '\'' +
                 ", data=" + date +
                 '}';
     }
